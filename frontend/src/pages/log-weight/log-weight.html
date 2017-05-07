@@ -1,0 +1,52 @@
+<!--
+  Generated template for the LogWeight page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Log New Excersise</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <!-- Scroll wheel for weights -->
+  <ion-card class="weights">
+    <ion-content>
+      <ion-list>
+        <ion-item id="item{{i}}" class="textCenter" *ngFor="let i of items">{{i}}</ion-item>
+      </ion-list>
+
+      <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content on-scroll="gotScrolled(this)"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-content>
+  </ion-card>
+
+  <!-- Scroll wheel for reps -->
+  <ion-card class="reps">
+    <ion-content>
+      <ion-list>
+        <ion-item id="reps{{i}}" class="textCenter" *ngFor="let i of reps">{{i}}</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-card>
+
+
+  <a (click)="submit($event, selectedItem)">
+    <span class="span-button log-weight">Submit?</span>
+  </a>
+
+
+</ion-content>
+
+<!--<ion-content padding>
+ <input type="number">
+  <a (click)="submit($event, selectedItem)">
+    <span class="span-button log-weight">Submit</span>
+ </a>
+</ion-content>-->
