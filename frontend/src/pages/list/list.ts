@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ItemDetailsPage } from '../item-details/item-details';
+import { ExerciseLogPage } from '../exercise-log/exercise-log';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class ListPage {
   selectedItem: any;
   itemIcons: string[];
   itemNames: string[]
-  items: Array<{title: string, icon: string}>;
+  items: Array<{id:string, title: string, icon: string}>;
   infoIcon:string;
   //items:string[];
 
@@ -21,8 +21,6 @@ export class ListPage {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
 
-    //this.itemIcons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    //'american-football', 'boat', 'bluetooth', 'build'];
     this.infoIcon = "ion-information-circled";
 
     this.itemNames = ['Machine 1 - Chest Press','Machine 2 - Triceps Press', 'Machine 3 - Fly', 'Machine 4 - Shoulder Press', 
@@ -32,16 +30,17 @@ export class ListPage {
     this.items = [];
     for(let i = 0; i < this.itemNames.length; i++) {
       this.items.push({
+        id: i.toString(),
         title: this.itemNames[i],
     /*    note: 'This is item #' + i,*/
-        //icon: this.itemIcons[i]
-        icon:this.infoIcon
+        icon: this.infoIcon
+        
       });
   }
   }
 
   itemTapped(event, item) {
-    this.navCtrl.push(ItemDetailsPage, {
+    this.navCtrl.push(ExerciseLogPage, {
       item: item
     });
   }

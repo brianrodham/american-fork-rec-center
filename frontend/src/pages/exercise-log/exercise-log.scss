@@ -1,0 +1,31 @@
+page-exercise-log {
+    h3 {
+         background-color: #1e1e1e;
+         color:white;
+    }
+
+    .log-weight {
+            position:absolute;
+            bottom:0px;
+    }
+    .log {
+        overflow:auto;
+        height:40%;
+    }
+    table {
+        width:100%;
+        text-align:center;
+        /*height:40%;*/
+
+    }
+
+    table tr {
+        height:30px;
+    }
+    .delete-text {
+        color:red;
+    }
+    button {
+        background-color:#252526;
+    }
+}

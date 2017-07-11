@@ -2,20 +2,21 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ItemDetailsPage } from '../pages/item-details/item-details';
+import { ExerciseLogPage } from '../pages/exercise-log/exercise-log';
 import { ListPage } from '../pages/list/list';
 import { LogWeightPage } from '../pages/log-weight/log-weight';
 import { ClientListPage } from '../pages/client-list/client-list';
 
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts';
+import { WeightRoomServiceProvider } from '../providers/weight-room-service/weight-room-service';
 
 
 @NgModule({
   declarations: [
     MyApp,
     HelloIonicPage,
-    ItemDetailsPage,
+    ExerciseLogPage,
     ListPage,
     LogWeightPage,
     ClientListPage
@@ -28,12 +29,13 @@ import { ChartsModule } from 'ng2-charts';
   entryComponents: [
     MyApp,
     HelloIonicPage,
-    ItemDetailsPage,
+    ExerciseLogPage,
     ListPage,
     LogWeightPage,
     ClientListPage
 
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
+    WeightRoomServiceProvider]
 })
 export class AppModule {}

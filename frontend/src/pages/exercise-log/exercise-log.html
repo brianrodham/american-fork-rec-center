@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle *ngIf="!selectedItem">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Exercise Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content scroll="false">
+  <h3 text-center *ngIf="selectedItem">
+    {{selectedItem.title}}
+    <!--<ion-icon [name]="selectedItem.icon"></ion-icon>-->
+    <ion-icon class="ion-information-circled"></ion-icon>
+  </h3>
+    <canvas baseChart
+      class="chart"
+      [datasets]="datasets"
+      [labels]="labels"
+      [options]="options"
+      [colors]="chartColors"
+      [chartType]="'line'">
+    </canvas>
+    <div class="log">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Weight</th> 
+              <th>Reps</th>
+              <th></th>
+              <th></th> 
+            </tr>
+          </thead>
+          <tbody id ="excerciseLog" #exerciseLog>
+            <tr *ngFor="let log of data">
+              <td>{{ log.date }}</td>
+              <td>{{ log.weight }}</td>
+              <td>{{ log.reps + " x " + log.sets }}</td>
+              <td>
+                <button (click)='editRecord(log.id)'>
+                  <i class='fa fa-pencil' aria-hidden='true'></i>
+                </button>
+              </td>
+              <td>
+                <button (click)='deleteRecord(log.id)'>
+                  <i class='fa fa-times-circle'></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        
+        </table>
+    </div>
+    <a (click)="newLog($event, selectedItem)">
+       <span class="span-button log-weight">Log Weight</span>
+    </a>
+</ion-content>
+

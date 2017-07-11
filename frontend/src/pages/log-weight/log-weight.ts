@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+//import {CalendarModule} from 'primeng/primeng';
 
 /*
   Generated class for the LogWeight page.
@@ -14,44 +15,31 @@ import { NavController, NavParams } from 'ionic-angular';
 export class LogWeightPage {
 
 
-  private items = [];
-  private incAmount = 5;
-  private scrollInc = 100;
-  private currentItem = this.items[6];
-  private reps = [];
+ // private items = [];
+  //private incAmount = 5;
+  //private scrollInc = 100;
+  //private currentItem = this.items[6];
+ // private reps = [];
+  private currentItem;
 
+  private data = {
+    weight: 20,
+    reps: 15,
+    sets: 3,
+    date: new Date()
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    for (let i = 5; i < this.scrollInc; i += this.incAmount) {
-      this.items.push(i);
-    }
-    for (let i = 1; i <= 30; i++) {
-      this.reps.push(i);
-    }
-
-    console.log(this.items);
+    this.currentItem = navParams.get('item');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LogWeightPage');
   }
 
-  gotScrolled(event) {
-    console.log("Scrolling");
-  }
-
-
-  doInfinite = function (infiniteScroll) {
-    setTimeout(() => {
-      var temp = this.items.length * this.incAmount;
-      for (let i = temp; i < temp + this.scrollInc; i+=this.incAmount) {
-        this.items.push(i);
-      }
-      infiniteScroll.complete();
-    }, 500);
-  }
-
   private submit(event, item) {
       console.log("Current Item: " + this.currentItem);
+      console.log("Data:");
+      console.log(this.data);
   }
 
 }
