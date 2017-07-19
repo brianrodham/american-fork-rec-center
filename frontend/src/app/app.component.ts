@@ -6,7 +6,10 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ListPage } from '../pages/list/list';
+import { CustomExercisePage } from '../pages/custom-exercise/custom-exercise'
 import {ClientListPage} from '../pages/client-list/client-list';
+import { AboutPage } from '../pages/about/about';
+import { SettingsPage } from '../pages/settings/settings';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
@@ -29,9 +32,12 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Hello Ionic', component: HelloIonicPage },
+      { title: 'Home', component: HelloIonicPage },
       { title: 'Weight Machines', component: ListPage },
-      { title: 'Client List', component: ClientListPage }
+      { title: 'Custom Weights', component: CustomExercisePage },
+      { title: 'Client List', component: ClientListPage }, // Only if they are a trainer
+      { title: 'Settings', component: SettingsPage},
+      { title: 'About', component: AboutPage }
     ];
   }
 
@@ -39,12 +45,13 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-      Splashscreen.hide();
+     // StatusBar.styleDefault();
+      //Splashscreen.hide();
     });
   }
 
   openPage(page) {
+    
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page

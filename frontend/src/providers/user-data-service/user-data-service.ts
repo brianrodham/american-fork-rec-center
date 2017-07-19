@@ -3,10 +3,189 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class WeightRoomServiceProvider {
+export class UserDataServiceProvider {
+
+  // A temp variable that we're going to treat as the server for queries
+  user_data = {
+    id: "myid",
+    account_type: 0, // set to 1 if a trainer
+    name: "Brian Rodham",
+    trainer_id:"trainerid", // Blank if they don't have one. 
+    clients: [], // Contains client IDs. Treat as empty if not a trainer account.
+    weight_machines: [
+      {
+        id: '1',
+        name: 'Machine 1 - Chest Press',
+        data: [ 
+          {
+            id: '6786-1-1',
+            date: '2/1/2017',
+            weight: '65',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-2',
+            date: '2/2/2017',
+            weight: '59',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-3',
+            date: '2/3/2017',
+            weight: '80',
+            reps: '15',
+            sets: '3'
+          },
+        ]
+      },
+      {
+        id: 'machine2',
+        name: 'Machine 2 - Triceps Press',
+        data: [ 
+          {
+            id: '6786-1-1',
+            date: '2/1/2017',
+            weight: '65',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-2',
+            date: '2/2/2017',
+            weight: '59',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-3',
+            date: '2/3/2017',
+            weight: '80',
+            reps: '15',
+            sets: '3'
+          },
+        ]
+      },
+      {
+        id: 'machine2',
+        name: 'Machine 3 - Fly',
+        data: [ 
+          {
+            id: '6786-1-1',
+            date: '2/1/2017',
+            weight: '65',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-2',
+            date: '2/2/2017',
+            weight: '59',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-3',
+            date: '2/3/2017',
+            weight: '80',
+            reps: '15',
+            sets: '3'
+          },
+        ]
+      }
+    ],
+    custom_weights: [
+        {
+        id: '1',
+        name: 'Bicep Curl',
+        description: "Curl the heavy thing until you can't curl no more.",
+        data: [ 
+          {
+            id: '6786-1-1',
+            date: '2/1/2017',
+            weight: '65',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-2',
+            date: '2/2/2017',
+            weight: '59',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-3',
+            date: '2/3/2017',
+            weight: '80',
+            reps: '15',
+            sets: '3'
+          },
+        ]
+      },
+      {
+        id: '2',
+        name: 'Bicep Curl DELUX',
+        description: "Do bicep curl til you can't curl no more, then curl more.",
+        data: [ 
+          {
+            id: '6786-1-1',
+            date: '2/1/2017',
+            weight: '65',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-2',
+            date: '2/2/2017',
+            weight: '59',
+            reps: '15',
+            sets: '3'
+          },
+          {
+            id:'6786-1-3',
+            date: '2/3/2017',
+            weight: '80',
+            reps: '15',
+            sets: '3'
+          },
+        ]
+      },
+    ],
+    measurements:  [
+      {
+        date: "5/17",
+        weight: 179,
+        thigh: 5,
+        arms: 5,
+        chest: 5,
+        hips: 5,
+        waist: 5
+      },
+      {
+        date: "6/17",
+        weight: 185,
+        thigh: 5,
+        arms: 4,
+        chest: 5,
+        hips: 5,
+        waist: 6
+      },
+      {
+        date: "7/17",
+        weight: 189,
+        thigh: 8,
+        arms: 8,
+        chest: 8,
+        hips: 5,
+        waist: 5
+      },
+    ]
+  }
 
   constructor(public http: Http) {
-    console.log('Hello WeightRoomServiceProvider Provider');
+    console.log('Hello UserDataServiceProvider Provider');
   }
 
   getRecordsById(exorciseId){
@@ -223,4 +402,28 @@ export class WeightRoomServiceProvider {
     return exorcise;
   }
 
+  isTrainer():Boolean{
+    return (this.user_data.account_type == 1);
+  }
+
+  getClients(){
+    return this.user_data.clients;
+  }
+
+  getWeightMachinesList(){
+      var machines = [];
+      for(let machine of this.user_data.weight_machines){
+        machines.push(machine.name);
+      }
+      return machines;
+  }
+  getCustomWeightList(){
+      var exercises = [];
+      for(let exercise of this.user_data.custom_weights){
+        exercises.push(exercise.name);
+      }
+      return exercises;
+  }
+
 }
+

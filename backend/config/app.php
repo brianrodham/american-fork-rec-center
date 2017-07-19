@@ -181,6 +181,8 @@ return [
 
 
         Laravel\Passport\PassportServiceProvider::class,
+
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
     ],
 
     /*

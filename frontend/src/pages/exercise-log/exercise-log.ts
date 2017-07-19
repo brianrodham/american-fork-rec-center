@@ -3,12 +3,12 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { LogWeightPage } from '../log-weight/log-weight';
 
-import { WeightRoomServiceProvider } from '../../providers/weight-room-service/weight-room-service';
+import { UserDataServiceProvider } from '../../providers/user-data-service/user-data-service';
 
 @Component({
   selector: 'page-exercise-log',
   templateUrl: 'exercise-log.html',
-  providers: [WeightRoomServiceProvider]
+  providers: [UserDataServiceProvider]
 })
 export class ExerciseLogPage {
   selectedItem: any;
@@ -45,10 +45,10 @@ export class ExerciseLogPage {
     }
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public weightRoomService: WeightRoomServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public userDataService: UserDataServiceProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
-    this.machineData = this.weightRoomService.getRecordsById(this.selectedItem.id);
+    this.machineData = this.userDataService.getRecordsById(this.selectedItem.id);
     this.data = this.machineData.data;
     this.getMachineData(this.selectedItem.id);
 
