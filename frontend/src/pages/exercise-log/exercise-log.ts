@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { LogWeightPage } from '../log-weight/log-weight';
 
-import { UserDataServiceProvider } from '../../providers/user-data-service/user-data-service';
+import { UserDataServiceProvider, ExerciseDataType } from '../../providers/user-data-service/user-data-service';
 
 @Component({
   selector: 'page-exercise-log',
@@ -48,12 +48,12 @@ export class ExerciseLogPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public userDataService: UserDataServiceProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
-    this.machineData = this.userDataService.getRecordsById(this.selectedItem.id);
+    //this.machineData = this.userDataService.getRecordsById(this.selectedItem.id);
+    this.machineData = this.userDataService.getExerciseData(this.selectedItem.type, this.selectedItem.id )
     this.data = this.machineData.data;
     this.getMachineData(this.selectedItem.id);
 
-    console.log("Selected Item:");
-    console.log(this.selectedItem);
+
 
     console.log("Data:");
     console.log(this.data);

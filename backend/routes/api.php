@@ -17,6 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->get('/test', function (Request $request) {
-    return "Hello";
-});
+//Route::middleware('auth:api')->get('/test', 'UserCollectionController@connectionTest');
+Route::post('/test', 'UserCollectionController@connectionTest'); // Creates a new partner lead
+

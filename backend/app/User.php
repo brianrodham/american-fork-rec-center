@@ -2,29 +2,19 @@
 
 namespace App;
 
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class User extends Authenticatable
-{
-    use  HasApiTokens, Notifiable;
+class User extends Eloquent
+{ 
+    protected $fillable = array('username', 'password', 'gender','month','day','year','phone','email','agree');
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $collection = 'users_collection';
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public static function getUsers(){
+        User::insertGetId(['test','test2',2]);
+    }
+
+    public static function test(){
+
+    }
 }

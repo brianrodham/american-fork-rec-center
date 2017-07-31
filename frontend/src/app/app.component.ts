@@ -10,6 +10,8 @@ import { CustomExercisePage } from '../pages/custom-exercise/custom-exercise'
 import {ClientListPage} from '../pages/client-list/client-list';
 import { AboutPage } from '../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
@@ -21,7 +23,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage: any = HelloIonicPage;
+  rootPage: any = LoginPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
@@ -32,10 +34,11 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
+      /*{ title: 'Login', component: LoginPage },*/
       { title: 'Home', component: HelloIonicPage },
       { title: 'Weight Machines', component: ListPage },
       { title: 'Custom Weights', component: CustomExercisePage },
-      { title: 'Client List', component: ClientListPage }, // Only if they are a trainer
+    /*  { title: 'Client List', component: ClientListPage }, // Only if they are a trainer*/
       { title: 'Settings', component: SettingsPage},
       { title: 'About', component: AboutPage }
     ];

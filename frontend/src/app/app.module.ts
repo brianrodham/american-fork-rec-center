@@ -9,10 +9,14 @@ import { LogWeightPage } from '../pages/log-weight/log-weight';
 import { ClientListPage } from '../pages/client-list/client-list';
 import { AboutPage } from '../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register'
+
 
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts';
 import { UserDataServiceProvider } from '../providers/user-data-service/user-data-service';
+import { AuthService} from '../providers/auth-service/auth-service';
 
 
 @NgModule({
@@ -25,7 +29,9 @@ import { UserDataServiceProvider } from '../providers/user-data-service/user-dat
     LogWeightPage,
     ClientListPage,
     AboutPage,
-    SettingsPage
+    SettingsPage,
+    LoginPage,
+    RegisterPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -41,10 +47,13 @@ import { UserDataServiceProvider } from '../providers/user-data-service/user-dat
     LogWeightPage,
     ClientListPage,
     AboutPage,
-    SettingsPage
+    SettingsPage,
+    LoginPage,
+    RegisterPage
 
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserDataServiceProvider]
+    UserDataServiceProvider,
+    AuthService]
 })
 export class AppModule {}
