@@ -38,9 +38,15 @@ button {
     color:white;
 }
 .item-block {
-    background-color:#333333;
-    color:white;
+    /*background-color:#333333;
+    color:white;*/
+    background-color:transparent;
+    color: #0565C9;
+    font-weight:600;
 }
+    .item-block .item-inner {
+        margin-left: 0px !important;
+    }
 
 .span-button {
     background-color:#0565C9;

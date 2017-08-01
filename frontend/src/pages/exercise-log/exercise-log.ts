@@ -26,8 +26,8 @@ export class ExerciseLogPage {
 
   public chartColors: Array<any> = [
     { // first color
-      backgroundColor: 'rgba(56,126,245,0.5)',
-      borderColor: 'rgba(56,126,245,0.2)',
+      backgroundColor: 'rgba(5,101,201,0.8)',
+      borderColor: 'rgba(5,101,201,0.2)',
       pointBackgroundColor: 'rgba(55,122,245,0.5)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
