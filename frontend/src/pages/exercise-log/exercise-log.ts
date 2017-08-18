@@ -7,8 +7,8 @@ import { UserDataServiceProvider, ExerciseDataType } from '../../providers/user-
 
 @Component({
   selector: 'page-exercise-log',
-  templateUrl: 'exercise-log.html',
-  providers: [UserDataServiceProvider]
+  templateUrl: 'exercise-log.html'
+ // providers: [UserDataServiceProvider]
 })
 export class ExerciseLogPage {
   selectedItem: any;
@@ -34,7 +34,6 @@ export class ExerciseLogPage {
       pointHoverBorderColor: 'rgba(56,126,245,0.5)'
     }];
 
-
   private options = {
     scales: {
       yAxes: [{
@@ -45,15 +44,13 @@ export class ExerciseLogPage {
     }
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public userDataService: UserDataServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public userData: UserDataServiceProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
-    //this.machineData = this.userDataService.getRecordsById(this.selectedItem.id);
-    this.machineData = this.userDataService.getExerciseData(this.selectedItem.type, this.selectedItem.id )
+
+    this.machineData = this.userData.getExerciseData(this.selectedItem.type, this.selectedItem.id )
     this.data = this.machineData.data;
     this.getMachineData(this.selectedItem.id);
-
-
 
     console.log("Data:");
     console.log(this.data);

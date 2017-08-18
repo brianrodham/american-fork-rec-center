@@ -15,12 +15,11 @@ import { HelloIonicPage } from '../hello-ionic/hello-ionic';
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = { email: 'email', password: 'pass' };
+  registerCredentials = { email: 'test2@test.com', password: 'test' };
  
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
  
   public createAccount() {
-     //alert("CREATING ACCOUNT I GUESS");
     this.nav.push(RegisterPage); // Navigating like this is causing a crash
   }
  

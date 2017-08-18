@@ -10,7 +10,7 @@ import { ClientListPage } from '../pages/client-list/client-list';
 import { AboutPage } from '../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
-import { RegisterPage } from '../pages/register/register'
+import { RegisterPage } from '../pages/register/register';
 
 
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';

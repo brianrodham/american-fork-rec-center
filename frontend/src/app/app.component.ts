@@ -40,7 +40,8 @@ export class MyApp {
       { title: 'Custom Weights', component: CustomExercisePage },
     /*  { title: 'Client List', component: ClientListPage }, // Only if they are a trainer*/
       { title: 'Settings', component: SettingsPage},
-      { title: 'About', component: AboutPage }
+      { title: 'About', component: AboutPage },
+      { title: 'Logout', component: LoginPage }
     ];
   }
 

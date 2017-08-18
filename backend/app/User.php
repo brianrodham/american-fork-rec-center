@@ -6,7 +6,7 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class User extends Eloquent
 { 
-    protected $fillable = array('username', 'password', 'gender','month','day','year','phone','email','agree');
+    protected $fillable = array('name', 'email', 'password','account_type','trainer_id','clients','weight_machines','custom_weights','measurements');
 
     protected $collection = 'users_collection';
 

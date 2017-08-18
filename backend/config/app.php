@@ -183,6 +183,8 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
 
         Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
+
     ],
 
     /*

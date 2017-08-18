@@ -11,11 +11,29 @@ export class DataLog{
   date: Date;
 }
 
+export class User { 
+   _id:string;
+   name:string;
+   email:string;
+   account_type:number;
+   trainer_id:string;
+   clients:string[];
+   weight_machines:any[];
+   custom_weights:any[];
+   measurements:any[];
+   updated_at:string;
+   created_at:string;
+   found:boolean;
+}
+
+
 @Injectable()
 export class UserDataServiceProvider {
 
   // A temp variable that we're going to treat as the server for queries
-  user_data = {
+  
+  user_data:User;
+  /*user_data = {
     id: "6786",
     account_type: 0, // set to 1 if a trainer
     name: "Brian Rodham",
@@ -911,229 +929,20 @@ export class UserDataServiceProvider {
         waist: 5
       },
     ]
-  }
+  }*/
 
   constructor(public http: Http) {
     console.log('Hello UserDataServiceProvider Provider');
+    this.user_data = new User();
   }
 
- // Outdated
-  getRecordsById(exorciseId){
-    // Format for IDs : [user_id]-[machine-id]-[log-id]
-    var exorcise = {
-      id: 'machine1',
-      name: 'Chest Press',
-      data: [
-        {
-          id: '6786-1-1',
-          date: '2/1/2017',
-          weight: '65',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-2',
-          date: '2/2/2017',
-          weight: '59',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-3',
-          date: '2/3/2017',
-          weight: '80',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-4',
-          date: '2/4/2017',
-          weight: '81',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-5',
-          date: '2/5/2017',
-          weight: '56',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-6',
-          date: '2/5/2017',
-          weight: '56',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-7',
-          date: '2/6/2017',
-          weight: '55',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-8',
-          date: '2/7/2017',
-          weight: '40',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-9',
-          date: '2/8/2017',
-          weight: '100',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-10',
-          date: '2/9/2017',
-          weight: '30',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-11',
-          date: '2/10/2017',
-          weight: '130',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-12',
-          date: '2/11/2017',
-          weight: '65',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-13',
-          date: '2/12/2017',
-          weight: '59',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-14',
-          date: '2/13/2017',
-          weight: '80',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-15',
-          date: '2/14/2017',
-          weight: '81',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-16',
-          date: '2/15/2017',
-          weight: '56',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-17',
-          date: '2/16/2017',
-          weight: '56',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-18',
-          date: '2/17/2017',
-          weight: '55',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-19',
-          date: '2/18/2017',
-          weight: '40',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-20',
-          date: '2/19/2017',
-          weight: '100',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-21',
-          date: '2/20/2017',
-          weight: '30',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-22',
-          date: '2/21/2017',
-          weight: '130',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-23',
-          date: '2/22/2017',
-          weight: '65',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-24',
-          date: '2/23/2017',
-          weight: '59',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-25',
-          date: '2/24/2017',
-          weight: '80',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-26',
-          date: '2/25/2017',
-          weight: '81',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-27',
-          date: '2/26/2017',
-          weight: '56',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-28',
-          date: '2/27/2017',
-          weight: '89',
-          reps: '15',
-          sets: '3'
-        },
-        {
-          id:'6786-1-29',
-          date: '2/28/2017',
-          weight: '55',
-          reps: '15',
-          sets: '3'
-        }
-      ] 
-    }
-    return exorcise;
+  getName(){
+    this.viewData();
+    return this.user_data.name;
   }
 
-  isTrainer():Boolean{
-    return (this.user_data.account_type == 1);
+  getEmail(){
+    return this.user_data.email;
   }
 
   getClients(){
@@ -1161,6 +970,7 @@ export class UserDataServiceProvider {
     var data = {};
     console.log("Attemping to get data for id: " + id);
     if (dataType == ExerciseDataType.Standard ){
+      this.viewData();
       data = this.user_data.weight_machines.find(x => x.id == id);
 
       console.log("Data:");
@@ -1182,6 +992,10 @@ export class UserDataServiceProvider {
     return data;
   }
 
+  isTrainer():Boolean{
+    return (this.user_data.account_type == 1);
+  }
+
   addNewExercise(type:ExerciseDataType, parentId: string,  data: DataLog){
       console.log("------------------------------------");
       console.log("PRETENDING TO SAVE DATA: ");
@@ -1190,5 +1004,16 @@ export class UserDataServiceProvider {
       console.log(data);
       console.log("------------------------------------");
   }
+
+  clear(){
+    this.user_data = new User();
+  }
+
+  viewData(){
+    console.log("-------------------------");
+    console.log(this.user_data);
+    console.log("-------------------------");
+  }
+
 }
 

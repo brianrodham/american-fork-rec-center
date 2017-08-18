@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { UserDataServiceProvider }  from '../../providers/user-data-service/user-data-service';
 
 /*
   Generated class for the SettingsPage page.
@@ -12,11 +13,16 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'settings.html'
 })
 export class SettingsPage {
+  name:string;
+  email:string;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userData:UserDataServiceProvider) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
+    this.name = this.userData.getName();
+    this.email = this.userData.getEmail();
   }
 
 }

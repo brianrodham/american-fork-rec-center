@@ -17,6 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::middleware('auth:api')->get('/test', 'UserCollectionController@connectionTest');
-Route::post('/test', 'UserCollectionController@connectionTest'); // Creates a new partner lead
+Route::get('/test', 'UserCollectionController@index'); // Creates a new partner lead
 
+Route::post('/user/get', 'UserCollectionController@get'); // Finds a user
+Route::post('/user/create', 'UserCollectionController@create'); // Creates a user
+Route::put('/user/update', 'UserCollectionController@create'); // Updates an existing user document
+Route::delete('/user/delete/{id}', 'UserCollectionController@delete'); // Deletes a specific user. Will probably never be allowed outside of testing
