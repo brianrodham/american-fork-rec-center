@@ -37,17 +37,17 @@ export class AuthService {
         let options = new RequestOptions({ headers: headers });
         this.http.post(this.loginEndpoint, credentials, options)
               .subscribe(data => {
-                //console.log(data['_body']);
-                if(data != undefined){
-                    console.log("Created user with id: " + data);
-                    this.userData.user_data = JSON.parse(data['_body']);
+                var user = JSON.parse(data['_body']);
+                console.log(user.data);
+                if(data.status == 200){
+                    this.userData.user_data = user.data;
                     observer.next(true);
-                    observer.complete();
                   }
                   else {
                     observer.next(false);
-                    observer.complete();
                   }
+                  observer.complete();
+
               }, error => {
                 console.log(error);// Error getting the data
               });
@@ -75,15 +75,17 @@ export class AuthService {
         this.http.post(this.registerEndpoint, credentials, options)
               .subscribe(data => {
                 //console.log(data['_body']);
-                if(data != undefined){
-                    console.log("Created user with id: " + data);
+                var user = JSON.parse(data['_body']);
+
+                if(data.status == 200){
+                    console.log("Created user with id: " + user.data);
                     observer.next(true);
-                    observer.complete();
                   }
                   else {
                     observer.next(false);
-                    observer.complete();
                   }
+                  observer.complete();
+
               }, error => {
                 console.log(error);// Error getting the data
               });

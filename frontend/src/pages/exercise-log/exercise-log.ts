@@ -4,6 +4,11 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { LogWeightPage } from '../log-weight/log-weight';
 
 import { UserDataServiceProvider, ExerciseDataType } from '../../providers/user-data-service/user-data-service';
+//import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+
+
+
+
 
 @Component({
   selector: 'page-exercise-log',
@@ -15,7 +20,8 @@ export class ExerciseLogPage {
   machineData:any;
   data:any;
   //@ViewChild('exerciseLog') dataTable;
-  
+   //@ViewChild(baseChart) chart: baseChart;
+
   private labels = [];
   private datasets = [
     {
@@ -50,6 +56,8 @@ export class ExerciseLogPage {
 
     this.machineData = this.userData.getExerciseData(this.selectedItem.type, this.selectedItem.id )
     this.data = this.machineData.data;
+
+
     this.getMachineData(this.selectedItem.id);
 
     console.log("Data:");
@@ -61,13 +69,39 @@ export class ExerciseLogPage {
 
   private getMachineData(machineId){
 
+    this.resetChart();
+
+    // Sorts the datalog objects by date
+    console.log("Sorting data");
+    this.data.sort(function(a,b){
+      var dateA = new Date(b.date).valueOf();
+      var dateB = new Date(a.date).valueOf();
+      return dateB - dateA;
+    });
+
+    var i = 0;
     for(let log of this.data){
       // Populate arrays for graph
+      //var date = log.date.substr(0, log.date.lastIndexOf("/"));
+      console.log("Log:");
+      console.log(log);
       var date = log.date.substr(0, log.date.lastIndexOf("/"));
-      this.labels.push(date);
-      this.datasets[0].data.push(log.weight);    
-      var dataTable:HTMLElement = document.getElementById("excerciseLog");
+      //this.labels.push(date);
+      this.labels.push("");
+      this.datasets[0].data.push(log.weight);  
+      i++;
+     // var dataTable:HTMLElement = document.getElementById("excerciseLog");
     }
+    //document.getElementById("dataChart").
+    this.datasets = this.datasets.slice(); // Makes the chart realize it's been updated. Don't delete.
+    this.labels.slice();
+    console.log("Labels:")
+    console.log(this.labels);
+    console.log("Dataset:");
+    console.log(this.datasets[0]);
+  // document.getElementById("dataChart").ngOnChanges({})
+    this.data.reverse();
+
   }
 
   private editRecord(id){
@@ -99,16 +133,28 @@ export class ExerciseLogPage {
   }
 
   private chartHovered(){
-
+    console.log("Hovering over chart");
   }
 
   private chartClicked(){
 
   }
 
+  private resetChart(){
+    console.log("Resetting chart data");
+    this.labels = [];
+    this.datasets[0].data = [];
+    this.datasets = this.datasets.slice(); // Makes the chart realize it's been updated. Don't delete.
+    this.labels.slice();
+  }
+
   private newLog(event, item) {
     this.navCtrl.push(LogWeightPage, {
-      item: item
+      item: item,
+      parent: this
     });
   }
+
+
+
 }

@@ -31,6 +31,7 @@ export class ListPage {
 
     this.items = [];
     for (let machine of this.machineList){
+      console.log(machine);
       this.items.push({
         id: machine.id,
         title: machine.name,

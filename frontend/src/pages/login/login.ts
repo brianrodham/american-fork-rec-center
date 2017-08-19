@@ -15,7 +15,7 @@ import { HelloIonicPage } from '../hello-ionic/hello-ionic';
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = { email: 'test2@test.com', password: 'test' };
+  registerCredentials = { email: 'steve@test.com', password: 'test' };
  
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
  

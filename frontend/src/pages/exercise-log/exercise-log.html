@@ -13,12 +13,14 @@
     <!--<ion-icon [name]="selectedItem.icon"></ion-icon>-->
     <ion-icon class="ion-information-circled"></ion-icon>
   </h3>
-    <canvas baseChart
+        <!--[labels]="labels"-->
+    <canvas baseChart id="dataChart"
       class="chart"
       [datasets]="datasets"
       [labels]="labels"
       [options]="options"
       [colors]="chartColors"
+      [legend]='false'
       [chartType]="'line'">
     </canvas>
     <div class="log">
@@ -41,11 +43,11 @@
               <td>{{ log.date }}</td>
               <td>{{ log.weight }}</td>
               <td>{{ log.reps + " x " + log.sets }}</td>
-              <td>
+              <!--<td>
                 <button (click)='editRecord(log.id)'>
                   <i class='fa fa-pencil' aria-hidden='true'></i>
                 </button>
-              </td>
+              </td>-->
               <td>
                 <button (click)='deleteRecord(log.id)'>
                   <i class='fa fa-times-circle'></i>

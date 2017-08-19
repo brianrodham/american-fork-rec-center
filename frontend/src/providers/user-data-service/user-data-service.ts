@@ -9,6 +9,9 @@ export class DataLog{
   reps:number;
   sets: number;
   date: Date;
+  parent: string;
+  exercise:string;
+  type:ExerciseDataType;
 }
 
 export class User { 
@@ -945,6 +948,10 @@ export class UserDataServiceProvider {
     return this.user_data.email;
   }
 
+  getUserId(){
+    return this.user_data._id;
+  }
+
   getClients(){
     return this.user_data.clients;
   }
@@ -996,13 +1003,24 @@ export class UserDataServiceProvider {
     return (this.user_data.account_type == 1);
   }
 
-  addNewExercise(type:ExerciseDataType, parentId: string,  data: DataLog){
+  addNewExercise(parentId: string,  data: DataLog){
       console.log("------------------------------------");
       console.log("PRETENDING TO SAVE DATA: ");
-      console.log("Type: " + type);
+      console.log("Type: " + data.type);
       console.log("Parent: " + parentId);
-      console.log(data);
+      console.log(JSON.stringify(data));
       console.log("------------------------------------");
+
+      if(data.type == ExerciseDataType.Standard){
+          this.user_data.weight_machines.find(x => x.id == parentId).data.push(data);
+      }
+      else if(data.type == ExerciseDataType.Custom){
+          this.user_data.custom_weights.find(x => x.id == parentId).data.push(data);
+      }
+      else {
+        // Handle bad type errors
+        console.log("Invalid exercise data type");
+      }
   }
 
   clear(){

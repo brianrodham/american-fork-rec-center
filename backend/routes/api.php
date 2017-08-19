@@ -23,3 +23,5 @@ Route::post('/user/get', 'UserCollectionController@get'); // Finds a user
 Route::post('/user/create', 'UserCollectionController@create'); // Creates a user
 Route::put('/user/update', 'UserCollectionController@create'); // Updates an existing user document
 Route::delete('/user/delete/{id}', 'UserCollectionController@delete'); // Deletes a specific user. Will probably never be allowed outside of testing
+
+Route::post('/log/create', 'ExerciseLogController@create');

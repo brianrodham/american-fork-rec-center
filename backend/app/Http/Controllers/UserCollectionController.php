@@ -34,23 +34,26 @@ class UserCollectionController extends Controller
     // Returns a user matching username/password. Used to log in. 
     function get(Request $request){
         $data = $request->all();
-        //echo $data['email'];
         $user = User::where([ 'email' => $data['email'], 'password' => $data['password'] ])->first();
-        
         if (isset($user['name'])) {       
-            $user->found = true;
             unset($user->password);
+
+            $response = ['data' => $user];
+            $code = 200;
         }
         else {
-            $user = ["found" => false];
+            $response = ['error' => 'Invalid username or password'];
+            $code = 401;
         }
-        return $user;
+
+        return response()->json($response, $code);
     }
 
     // Creates a new user document in the DB
     function create(Request $request){
         $data = $request->all();
         $userId = uniqid();
+        
         $user = User::create(array(
             //'id' => $userId,
             'name' => $data['name'],
@@ -63,8 +66,16 @@ class UserCollectionController extends Controller
             'custom_weights' => [],
             'measurements' =>  []
         ));
-
-        echo $user['_id'];
+        if (isset($user['_id'])){
+            $code = 200;
+            $response = ['data' => $user['_id']];
+        }
+        else {
+            $code = 500;
+            $response = ['error' => 'Failed to create new user. Unknown reason'];
+        }
+        return response()->json($response,$code);
+        //echo $user['_id'];
     }
 
     function delete($id){
@@ -91,8 +102,9 @@ class UserCollectionController extends Controller
                 'type'=>'ExerciseDataType.Standard',
                 'data' => []
             );
+            //$item = [$key => $values];
             array_push($machines, $item);
-        }
+        };
 
         return $machines;
 

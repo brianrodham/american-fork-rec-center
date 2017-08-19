@@ -11,6 +11,7 @@ import { AboutPage } from '../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+//import {ScheduleModule} from 'primeng/primeng';
 
 
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
@@ -35,7 +36,8 @@ import { AuthService} from '../providers/auth-service/auth-service';
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    ChartsModule
+    ChartsModule,
+    //ScheduleModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

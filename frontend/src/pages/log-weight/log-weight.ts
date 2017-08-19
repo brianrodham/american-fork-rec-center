@@ -16,7 +16,7 @@ import { UserDataServiceProvider, ExerciseDataType, DataLog }  from '../../provi
 export class LogWeightPage {
 
   private currentItem;
-
+  private parent;
   private data = new DataLog();
 
 
@@ -26,11 +26,14 @@ export class LogWeightPage {
     public userData:UserDataServiceProvider
     ) {
     this.currentItem = navParams.get('item');
-
+    this.parent = navParams.get('parent');
     this.data.weight = 20;
     this.data.reps = 15;
     this.data.sets = 3;
     this.data.date = new Date();
+    this.data.parent = userData.getUserId();
+    this.data.exercise = this.currentItem.id;
+    this.data.type = this.currentItem.type;
   }
 
   ionViewDidLoad() {
@@ -41,7 +44,9 @@ export class LogWeightPage {
       //console.log("Data:");
      // console.log(this.data);
 
-      this.userData.addNewExercise(this.currentItem.type, this.currentItem.id, this.data)
+      this.userData.addNewExercise(this.currentItem.id, this.data)
+      this.parent.getMachineData(this.currentItem.id);
+      this.navCtrl.pop();
 
   }
 

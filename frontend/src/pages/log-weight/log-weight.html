@@ -11,7 +11,9 @@
 
   <div class="main-content">
     <h2>Date</h2>
-    <input type="date" [value]="data.date | date:'MM-dd-yyyy'">
+    <!--<input type="date" [value]="data.date | date:'MM-dd-yyyy'" [(ngModel)]="data.date">-->
+    <input type="date" data-date-format="DD MMMM YYYY" [(ngModel)]="data.date">
+  
 
     <h2>Weight</h2>
     <input type="number" [(ngModel)]="data.weight">
