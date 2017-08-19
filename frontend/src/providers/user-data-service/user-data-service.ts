@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 export enum ExerciseDataType { Standard = 0, Custom = 1 };
@@ -36,6 +36,7 @@ export class UserDataServiceProvider {
   // A temp variable that we're going to treat as the server for queries
   
   user_data:User;
+  dataLogEndpoint:string;
   /*user_data = {
     id: "6786",
     account_type: 0, // set to 1 if a trainer
@@ -935,7 +936,7 @@ export class UserDataServiceProvider {
   }*/
 
   constructor(public http: Http) {
-    console.log('Hello UserDataServiceProvider Provider');
+    this.dataLogEndpoint = 'http://localhost:8000/api/log/create';
     this.user_data = new User();
   }
 
@@ -1021,6 +1022,32 @@ export class UserDataServiceProvider {
         // Handle bad type errors
         console.log("Invalid exercise data type");
       }
+      var json_data = JSON.stringify(data);
+
+      var headers = new Headers();
+      headers.append("Accept", 'application/json');
+      headers.append('Content-Type', 'application/json' );
+
+      let options = new RequestOptions({ headers: headers });
+      this.http.post(this.dataLogEndpoint, json_data, options)
+              .subscribe(data => {
+                //console.log(data['_body']);
+                var user = JSON.parse(data['_body']);
+
+                if(data.status == 200){
+                    console.log("Successfully created new log");
+                    //observer.next(true);
+                  }
+                  else {
+                    //TO DO - CACHE LOGS THAT DONT PUSH THROUGH AND DELIVER THEM AT A LATER DATE
+                    //observer.next(false);
+                  }
+                  //observer.complete();
+
+              }, error => {
+                console.log(error);// Error getting the data
+              });
+
   }
 
   clear(){
