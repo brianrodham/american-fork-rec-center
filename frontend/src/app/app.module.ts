@@ -11,6 +11,9 @@ import { AboutPage } from '../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { CreateCustomPage } from '../pages/create-custom/create-custom';
+import { MeasurementsPage } from '../pages/measurements/measurements';
+import { CreateMeasurementPage } from '../pages/create-measurement/create-measurement';
 //import {ScheduleModule} from 'primeng/primeng';
 
 
@@ -32,7 +35,10 @@ import { AuthService} from '../providers/auth-service/auth-service';
     AboutPage,
     SettingsPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    CreateCustomPage,
+    MeasurementsPage,
+    CreateMeasurementPage,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -51,8 +57,10 @@ import { AuthService} from '../providers/auth-service/auth-service';
     AboutPage,
     SettingsPage,
     LoginPage,
-    RegisterPage
-
+    RegisterPage,
+    CreateCustomPage,
+    CreateMeasurementPage,
+    MeasurementsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
     UserDataServiceProvider,

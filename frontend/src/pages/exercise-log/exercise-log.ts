@@ -54,21 +54,27 @@ export class ExerciseLogPage {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
 
+    console.log("Selected Item:");
+    console.log(this.selectedItem);
+
     this.machineData = this.userData.getExerciseData(this.selectedItem.type, this.selectedItem.id )
     this.data = this.machineData.data;
 
 
     this.getMachineData(this.selectedItem.id);
 
-    console.log("Data:");
-    console.log(this.data);
+    //console.log("Data:");
+    //console.log(this.data);
   }
 
   ngAfterViewInit() {
   }
 
   private getMachineData(machineId){
-
+    console.log("------------------------------------");
+    console.log("Getting machine data");
+    console.log(this.data);
+    console.log("------------------------------------");
     this.resetChart();
 
     // Sorts the datalog objects by date
@@ -125,6 +131,7 @@ export class ExerciseLogPage {
           text: 'Delete',
           handler: () => {
             console.log('Delete clicked');
+            this.userData.deleteExerciseLog();
           }
         }
       ]

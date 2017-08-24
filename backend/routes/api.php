@@ -25,3 +25,5 @@ Route::put('/user/update', 'UserCollectionController@create'); // Updates an exi
 Route::delete('/user/delete/{id}', 'UserCollectionController@delete'); // Deletes a specific user. Will probably never be allowed outside of testing
 
 Route::post('/log/create', 'ExerciseLogController@create');
+
+Route::post('/custom/create', 'CustomExerciseController@create');

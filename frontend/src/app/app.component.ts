@@ -12,6 +12,7 @@ import { AboutPage } from '../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { MeasurementsPage } from '../pages/measurements/measurements';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
@@ -37,7 +38,8 @@ export class MyApp {
       /*{ title: 'Login', component: LoginPage },*/
       { title: 'Home', component: HelloIonicPage },
       { title: 'Weight Machines', component: ListPage },
-      { title: 'Custom Weights', component: CustomExercisePage },
+      { title: 'Custom Exercise', component: CustomExercisePage },
+      { title: 'Measurements', component: MeasurementsPage },
     /*  { title: 'Client List', component: ClientListPage }, // Only if they are a trainer*/
       { title: 'Settings', component: SettingsPage},
       { title: 'About', component: AboutPage },

@@ -3,7 +3,12 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Custom Exercise</ion-title>
+    <ion-title>
+      Custom Exercise
+      <button class="addNew" (click)='createNewExercise()'>
+        <i class='fa fa-plus-circle'></i>
+      </button>
+      </ion-title>
   </ion-navbar>
 </ion-header>
 

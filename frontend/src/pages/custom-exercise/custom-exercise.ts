@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Observable, Subject, Subscription } from 'rxjs/Rx';
 
 import { ExerciseLogPage } from '../exercise-log/exercise-log';
 import { UserDataServiceProvider, ExerciseDataType }  from '../../providers/user-data-service/user-data-service';
+import { CreateCustomPage } from '../create-custom/create-custom';
 /*
   Generated class for the CustomExercisePage page.
 
@@ -21,16 +23,40 @@ export class CustomExercisePage {
   infoIcon:string;
   //items:string[];
 
+  newCustomExerciseListener: Subscription;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public userData:UserDataServiceProvider) {
-    // If we navigated to this page, we will have an item available as a nav param
-    //this.selectedItem = navParams.get('item');
+
     this.infoIcon = "ion-information-circled";
 
-    //this.itemNames = ['Machine 1 - Chest Press','Machine 2 - Triceps Press', 'Machine 3 - Fly', 'Machine 4 - Shoulder Press', 
-    //'Machine 5 - Lateral Raise', 'Machine 6 - Pulldown', 'Machine 7 - Row/Real Deltoid', 'Machine 8 - Biceps Curl','Machine 9 - Torso Rotation', 'Machine 10 - Abdominal',
-    //'Machine 11 - Back Extention', 'Machine 17 - Hip Abduction', 'Machine 18 - Hip Adduction', 'Machine 19 - Leg Extention', 'Machine 20 - Seated Leg Curl', 'Machine 21 - Seated Leg Press'];
-    this.weightList = userData.getCustomWeightList();
+    this.weightList = userData.getCustomWeightList();  
+    this.buildExerciseList();
 
+
+    // Updates the list whenever a new exercise is created
+    this.newCustomExerciseListener = userData.exerciseListChanged.subscribe(
+      () => {
+        this.weightList = userData.getCustomWeightList();
+        this.buildExerciseList();
+        console.log("Event caught");
+      }
+    );
+
+  }
+
+  itemTapped(event, item) {
+    this.navCtrl.push(ExerciseLogPage, {
+      item: item
+    });
+  }
+
+  createNewExercise(){
+     this.navCtrl.push(CreateCustomPage);
+  }
+
+  buildExerciseList(){
+    console.log("Custom weight list:");
+    console.log(this.weightList);
     this.items = [];
     for (let machine of this.weightList){
       this.items.push({
@@ -40,12 +66,6 @@ export class CustomExercisePage {
         icon: this.infoIcon
       });
     }
-  }
-
-  itemTapped(event, item) {
-    this.navCtrl.push(ExerciseLogPage, {
-      item: item
-    });
   }
 
 }

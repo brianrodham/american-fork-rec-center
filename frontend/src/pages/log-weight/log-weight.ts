@@ -44,7 +44,7 @@ export class LogWeightPage {
       //console.log("Data:");
      // console.log(this.data);
 
-      this.userData.addNewExercise(this.currentItem.id, this.data)
+      this.userData.addExerciseLog(this.currentItem.id, this.data)
       this.parent.getMachineData(this.currentItem.id);
       this.navCtrl.pop();
 

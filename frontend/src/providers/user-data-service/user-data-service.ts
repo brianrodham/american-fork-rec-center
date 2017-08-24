@@ -1,42 +1,65 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 export enum ExerciseDataType { Standard = 0, Custom = 1 };
 
-export class DataLog{
-  weight:number;
-  reps:number;
+export class DataLog {
+  weight: number;
+  reps: number;
   sets: number;
   date: Date;
   parent: string;
-  exercise:string;
-  type:ExerciseDataType;
+  exercise: string;
+  type: ExerciseDataType;
 }
 
-export class User { 
-   _id:string;
-   name:string;
-   email:string;
-   account_type:number;
-   trainer_id:string;
-   clients:string[];
-   weight_machines:any[];
-   custom_weights:any[];
-   measurements:any[];
-   updated_at:string;
-   created_at:string;
-   found:boolean;
+export class User {
+  _id: string;
+  name: string;
+  email: string;
+  account_type: number;
+  trainer_id: string;
+  clients: string[];
+  weight_machines: Exercise[];
+  custom_weights: Exercise[];
+  measurements: Measurement[];
+  updated_at: string;
+  created_at: string;
+}
+
+export class Exercise {
+  id: string;
+  name: string;
+  type: ExerciseDataType;
+  data: DataLog[];
+  description: string;
+  image: string;
+}
+
+export class Measurement {
+  weight: number;
+  thigh: number;
+  arm: number;
+  chest: number;
+  waist: number;
 }
 
 
 @Injectable()
 export class UserDataServiceProvider {
 
+  // Events
+  @Output() exerciseListChanged: EventEmitter<any> = new EventEmitter();
+
   // A temp variable that we're going to treat as the server for queries
-  
-  user_data:User;
-  dataLogEndpoint:string;
+
+  user_data: User;
+
+  dataLogEndpoint: string;
+  createExerciseEndpoint: string;
+
+  httpOptions: RequestOptions;
   /*user_data = {
     id: "6786",
     account_type: 0, // set to 1 if a trainer
@@ -936,56 +959,74 @@ export class UserDataServiceProvider {
   }*/
 
   constructor(public http: Http) {
-    this.dataLogEndpoint = 'http://localhost:8000/api/log/create';
+    var baseURL = "http://localhost:8000/api/";
+    this.dataLogEndpoint = baseURL + 'log/create';
+    this.createExerciseEndpoint = baseURL + 'custom/create';
     this.user_data = new User();
+
+    // Creates the headers and options for the http requests
+    var headers = new Headers();
+    headers.append("Accept", 'application/json');
+    headers.append('Content-Type', 'application/json');
+
+    this.httpOptions = new RequestOptions({ headers: headers });
   }
 
-  getName(){
+  getName() {
     this.viewData();
     return this.user_data.name;
   }
 
-  getEmail(){
+  getEmail() {
     return this.user_data.email;
   }
 
-  getUserId(){
+  getUserId() {
     return this.user_data._id;
   }
 
-  getClients(){
+  getClients() {
     return this.user_data.clients;
   }
 
-  getWeightMachinesList(){
-      var machines = [];
-      for(let machine of this.user_data.weight_machines){
-        machines.push(machine);
-      }
-      return machines;
+  getWeightMachinesList() {
+    var machines = [];
+    for (let machine of this.user_data.weight_machines) {
+      machines.push(machine);
+    }
+    return machines;
   }
 
 
-  getCustomWeightList(){
-      var exercises = [];
-      for(let exercise of this.user_data.custom_weights){
-        exercises.push(exercise);
-      }
-      return exercises;
+  getCustomWeightList() {
+    var exercises = [];
+    for (let exercise of this.user_data.custom_weights) {
+      exercises.push(exercise);
+    }
+    return exercises;
   }
 
-  getExerciseData(dataType: ExerciseDataType, id){
+  createCustomExercise(data: Exercise) {
+    console.log("Creating new exercise type");
+    console.log(JSON.stringify(data));
+
+    this.http_createCustomExercise(data)
+  }
+
+  getExerciseData(dataType: ExerciseDataType, id: string) {
     var data = {};
     console.log("Attemping to get data for id: " + id);
-    if (dataType == ExerciseDataType.Standard ){
+    if (dataType == ExerciseDataType.Standard) {
       this.viewData();
       data = this.user_data.weight_machines.find(x => x.id == id);
 
       console.log("Data:");
       console.log(data);
     }
-    else if (dataType == ExerciseDataType.Custom){
+    else if (dataType == ExerciseDataType.Custom) {
       data = this.user_data.custom_weights.find(x => x.id == id);
+      console.log("Custom Data:");
+      console.log(data);
     }
     else {
       console.log("This should never happen");
@@ -993,68 +1034,105 @@ export class UserDataServiceProvider {
     }
 
 
-    if(data == undefined){
+    if (data == undefined) {
       // Thow some sort of error and return gracefully
+      console.log("FAILED TO FIND OBJECT WITH ID OF: " + id);
       data = {};
     }
     return data;
   }
 
-  isTrainer():Boolean{
+  isTrainer(): Boolean {
     return (this.user_data.account_type == 1);
   }
 
-  addNewExercise(parentId: string,  data: DataLog){
-      console.log("------------------------------------");
-      console.log("PRETENDING TO SAVE DATA: ");
-      console.log("Type: " + data.type);
-      console.log("Parent: " + parentId);
-      console.log(JSON.stringify(data));
-      console.log("------------------------------------");
+  addExerciseLog(parentId: string, data: DataLog) {
+    console.log("------------------------------------");
+    console.log("Type: " + data.type);
+    console.log("Parent: " + parentId);
+    console.log(JSON.stringify(data));
+    console.log("------------------------------------");
 
-      if(data.type == ExerciseDataType.Standard){
-          this.user_data.weight_machines.find(x => x.id == parentId).data.push(data);
-      }
-      else if(data.type == ExerciseDataType.Custom){
-          this.user_data.custom_weights.find(x => x.id == parentId).data.push(data);
-      }
-      else {
-        // Handle bad type errors
-        console.log("Invalid exercise data type");
-      }
-      var json_data = JSON.stringify(data);
-
-      var headers = new Headers();
-      headers.append("Accept", 'application/json');
-      headers.append('Content-Type', 'application/json' );
-
-      let options = new RequestOptions({ headers: headers });
-      this.http.post(this.dataLogEndpoint, json_data, options)
-              .subscribe(data => {
-                //console.log(data['_body']);
-                var user = JSON.parse(data['_body']);
-
-                if(data.status == 200){
-                    console.log("Successfully created new log");
-                    //observer.next(true);
-                  }
-                  else {
-                    //TO DO - CACHE LOGS THAT DONT PUSH THROUGH AND DELIVER THEM AT A LATER DATE
-                    //observer.next(false);
-                  }
-                  //observer.complete();
-
-              }, error => {
-                console.log(error);// Error getting the data
-              });
+    if (data.type == ExerciseDataType.Standard) {
+      this.user_data.weight_machines.find(x => x.id == parentId).data.push(data);
+    }
+    else if (data.type == ExerciseDataType.Custom) {
+      this.user_data.custom_weights.find(x => x.id == parentId).data.push(data);
+    }
+    else {
+      // Handle bad type errors
+      console.log("Invalid exercise data type");
+    }
+    // var json_data = JSON.stringify(data);
+    this.http_addExerciseLog(data);
 
   }
 
-  clear(){
+  deleteExerciseLog() {
+    console.log("TO DO - Delete selected log from the list")
+  }
+
+  http_addExerciseLog(exerciseData: DataLog) {
+
+    var jsonData = JSON.stringify(exerciseData);
+    this.http.post(this.dataLogEndpoint, jsonData, this.httpOptions)
+      .subscribe(data => {
+        //console.log(data['_body']);
+        var user = JSON.parse(data['_body']);
+
+        if (data.status == 200) {
+          console.log("Successfully created new log");
+        }
+        else {
+          //TO DO - CACHE LOGS THAT DONT PUSH THROUGH AND DELIVER THEM AT A LATER DATE
+          //observer.next(false);
+        }
+        //observer.complete();
+
+      }, error => {
+        console.log(error);// Error getting the data
+      });
+  }
+
+  http_createCustomExercise(exerciseData: Exercise) {
+
+    var myData = {
+      user: this.user_data._id,
+      exercise: exerciseData
+    };
+
+    var jsonData = JSON.stringify(myData);
+    console.log("Json Data:");
+    console.log(jsonData);
+    this.http.post(this.createExerciseEndpoint, jsonData, this.httpOptions)
+      .subscribe(data => {
+        
+        if (data.status == 200) {
+          var id = JSON.parse(data['_body']).data;
+          console.log("Successfully created new exercise");
+          console.log(id);
+          exerciseData.id = id;
+          exerciseData.data = [];
+          this.user_data.custom_weights.push(exerciseData);
+          this.exerciseListChanged.emit(null);
+
+        }
+        else {
+          //TO DO - CACHE LOGS THAT DONT PUSH THROUGH AND DELIVER THEM AT A LATER DATE
+          //observer.next(false);
+        }
+        //observer.complete();
+
+      }, error => {
+        console.log(error);// Error getting the data
+      });
+  }
+
+  clear() {
     this.user_data = new User();
   }
 
-  viewData(){
+  viewData() {
     console.log("-------------------------");
     console.log(this.user_data);
     console.log("-------------------------");
