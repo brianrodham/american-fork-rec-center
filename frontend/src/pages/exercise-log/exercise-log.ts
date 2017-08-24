@@ -63,8 +63,6 @@ export class ExerciseLogPage {
 
     this.getMachineData(this.selectedItem.id);
 
-    //console.log("Data:");
-    //console.log(this.data);
   }
 
   ngAfterViewInit() {
@@ -87,8 +85,6 @@ export class ExerciseLogPage {
 
     var i = 0;
     for(let log of this.data){
-      // Populate arrays for graph
-      //var date = log.date.substr(0, log.date.lastIndexOf("/"));
       console.log("Log:");
       console.log(log);
       var date = log.date.substr(0, log.date.lastIndexOf("/"));
@@ -96,16 +92,13 @@ export class ExerciseLogPage {
       this.labels.push("");
       this.datasets[0].data.push(log.weight);  
       i++;
-     // var dataTable:HTMLElement = document.getElementById("excerciseLog");
     }
-    //document.getElementById("dataChart").
     this.datasets = this.datasets.slice(); // Makes the chart realize it's been updated. Don't delete.
     this.labels.slice();
-    console.log("Labels:")
+    /*console.log("Labels:")
     console.log(this.labels);
     console.log("Dataset:");
-    console.log(this.datasets[0]);
-  // document.getElementById("dataChart").ngOnChanges({})
+    console.log(this.datasets[0]);*/
     this.data.reverse();
 
   }
