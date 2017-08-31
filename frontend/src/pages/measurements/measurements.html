@@ -15,7 +15,60 @@
 
 </ion-header>
 
-
+<!--  [colors]="chartColors" -->
 <ion-content padding>
-  <h1>Measurements</h1>
+    <!--<canvas baseChart id="dataChart"
+      class="chart"
+      [datasets]="datasets"
+      [labels]="labels"
+      [options]="options"
+     
+      [legend]='false'
+      [chartType]="'line'">
+    </canvas>-->
+    <p-chart type="line" [data]="data"></p-chart>
+
+    <div class="log">
+        <span class="list-text" *ngIf="measurements.length == 0">
+          No measurements found
+        </span> 
+        <table *ngIf="measurements.length != 0">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Weight</th> 
+              <th>Thigh</th>
+              <th>Arm</th>
+              <th>Chest</th> 
+              <th>Waist</th>
+              <th></th>
+            </tr>
+          </thead>
+   
+          <tbody id ="excerciseLog" #exerciseLog>
+            <tr *ngFor="let log of measurements">
+              <td>{{ log.date }}</td>
+              <td>{{ log.weight }}</td>
+              <td>{{ log.thigh }}</td>
+              <td>{{ log.arm }}</td>
+              <td>{{ log.chest }}</td>
+              <td>{{ log.waist }}</td>
+              <!--<td>
+                <button (click)='editRecord(log.id)'>
+                  <i class='fa fa-pencil' aria-hidden='true'></i>
+                </button>
+              </td>-->
+              <td>
+                <button (click)='deleteRecord(log.id)'>
+                  <i class='fa fa-times-circle'></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        
+        </table>
+    </div>
+    <a (click)="newMeasurements($event)">
+       <span class="span-button log-button">Log Measurments</span>
+    </a>
 </ion-content>

@@ -1,4 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
@@ -14,11 +16,12 @@ import { RegisterPage } from '../pages/register/register';
 import { CreateCustomPage } from '../pages/create-custom/create-custom';
 import { MeasurementsPage } from '../pages/measurements/measurements';
 import { CreateMeasurementPage } from '../pages/create-measurement/create-measurement';
-//import {ScheduleModule} from 'primeng/primeng';
+import {ScheduleModule} from 'primeng/primeng';
 
 
-import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
+//import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts';
+import { ChartModule } from 'primeng/primeng';
 import { UserDataServiceProvider } from '../providers/user-data-service/user-data-service';
 import { AuthService} from '../providers/auth-service/auth-service';
 
@@ -42,8 +45,11 @@ import { AuthService} from '../providers/auth-service/auth-service';
   ],
   imports: [
     IonicModule.forRoot(MyApp),
+    BrowserModule,
+    HttpModule,
     ChartsModule,
-    //ScheduleModule
+    ChartModule,
+    ScheduleModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

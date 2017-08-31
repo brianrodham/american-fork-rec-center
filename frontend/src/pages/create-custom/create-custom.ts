@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { UserDataServiceProvider,ExerciseDataType, DataLog, Exercise } from '../../providers/user-data-service/user-data-service';
+import { UserDataServiceProvider, ExerciseDataType, DataLog, Exercise } from '../../providers/user-data-service/user-data-service';
 
 /*
   Generated class for the CreateCustomPage page.
@@ -16,18 +16,18 @@ import { UserDataServiceProvider,ExerciseDataType, DataLog, Exercise } from '../
   templateUrl: 'create-custom.html'
 })
 export class CreateCustomPage {
-  
+
   data = new Exercise();
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public userData:UserDataServiceProvider) {
-    
-    }
-  
-    private submit(event, item) {
-      this.userData.createCustomExercise(this.data);
-      this.navCtrl.pop();
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public userData: UserDataServiceProvider) {
+
+  }
+
+  private submit(event, item) {
+    this.userData.createCustomExercise(this.data);
+    this.navCtrl.pop();
   }
 
 }

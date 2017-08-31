@@ -5,6 +5,7 @@ import { LogWeightPage } from '../log-weight/log-weight';
 
 import { UserDataServiceProvider, ExerciseDataType } from '../../providers/user-data-service/user-data-service';
 //import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { UIChart } from 'primeng/primeng';
 
 
 
@@ -19,40 +20,15 @@ export class ExerciseLogPage {
   selectedItem: any;
   machineData:any;
   data:any;
-  //@ViewChild('exerciseLog') dataTable;
-   //@ViewChild(baseChart) chart: baseChart;
+  chartData:any;
 
-  private labels = [];
-  private datasets = [
-    {
-      label: "Weight",
-      data:[]
-    }
-  ];
-
-  public chartColors: Array<any> = [
-    { // first color
-      backgroundColor: 'rgba(5,101,201,0.8)',
-      borderColor: 'rgba(5,101,201,0.2)',
-      pointBackgroundColor: 'rgba(55,122,245,0.5)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(56,126,245,0.5)'
-    }];
-
-  private options = {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  };
+  @ViewChild('lineChart') lineChart: UIChart; 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public userData: UserDataServiceProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
+
+
 
     console.log("Selected Item:");
     console.log(this.selectedItem);
@@ -60,12 +36,27 @@ export class ExerciseLogPage {
     this.machineData = this.userData.getExerciseData(this.selectedItem.type, this.selectedItem.id )
     this.data = this.machineData.data;
 
+    this.chartData = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Weight',
+          data: [],
+          fill: false,
+          borderColor: '#3783D3'
+        }
+      ]
+    }
 
     this.getMachineData(this.selectedItem.id);
 
   }
 
   ngAfterViewInit() {
+    console.log("Chart Element");
+    console.log(this.lineChart);
+    var that = this;
+    setTimeout(function(){ that.lineChart.refresh(); }, 500);
   }
 
   private getMachineData(machineId){
@@ -73,8 +64,9 @@ export class ExerciseLogPage {
     console.log("Getting machine data");
     console.log(this.data);
     console.log("------------------------------------");
-    this.resetChart();
-
+    //this.resetChart();
+   // console.log("Labels - Should be empty:")
+    //console.log(this.data.labels);   
     // Sorts the datalog objects by date
     console.log("Sorting data");
     this.data.sort(function(a,b){
@@ -85,22 +77,25 @@ export class ExerciseLogPage {
 
     var i = 0;
     for(let log of this.data){
-      console.log("Log:");
-      console.log(log);
-      var date = log.date.substr(0, log.date.lastIndexOf("/"));
-      //this.labels.push(date);
-      this.labels.push("");
-      this.datasets[0].data.push(log.weight);  
+     // console.log("Log:");
+      //console.log(log);
+      var date = log.date.substr(log.date.indexOf("-") + 1, log.date.length);
+      this.chartData.labels.push(date);
+      //this.chartData.labels.push("Hi");
+      this.chartData.datasets[0].data.push(log.weight);  
       i++;
     }
-    this.datasets = this.datasets.slice(); // Makes the chart realize it's been updated. Don't delete.
-    this.labels.slice();
-    /*console.log("Labels:")
-    console.log(this.labels);
+    this.chartData.datasets = this.chartData.datasets.slice(); // Makes the chart realize it's been updated. Don't delete.
+    this.chartData.labels = this.chartData.labels.slice();
+  
+    console.log("Labels:")
+    console.log(this.chartData.labels);
     console.log("Dataset:");
-    console.log(this.datasets[0]);*/
-    this.data.reverse();
+    console.log(this.chartData.datasets[0].data);
 
+   // this.chartData.datasets[0].data.reverse();
+   this.data.reverse();
+  // this.chart.reinit();
   }
 
   private editRecord(id){
@@ -142,10 +137,11 @@ export class ExerciseLogPage {
 
   private resetChart(){
     console.log("Resetting chart data");
-    this.labels = [];
-    this.datasets[0].data = [];
-    this.datasets = this.datasets.slice(); // Makes the chart realize it's been updated. Don't delete.
-    this.labels.slice();
+    this.chartData.labels.length = 0;
+    this.chartData.labels = [];
+    this.chartData.datasets[0].data = [];
+    this.chartData.datasets = this.chartData.datasets.slice(); // Makes the chart realize it's been updated. Don't delete.
+    this.chartData.labels = this.chartData.labels.slice();
   }
 
   private newLog(event, item) {

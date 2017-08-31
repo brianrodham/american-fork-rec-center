@@ -997,6 +997,9 @@ export class UserDataServiceProvider {
     return machines;
   }
 
+  getMeasurements() {
+    return this.user_data.measurements;
+  }
 
   getCustomWeightList() {
     var exercises = [];
@@ -1004,13 +1007,6 @@ export class UserDataServiceProvider {
       exercises.push(exercise);
     }
     return exercises;
-  }
-
-  createCustomExercise(data: Exercise) {
-    console.log("Creating new exercise type");
-    console.log(JSON.stringify(data));
-
-    this.http_createCustomExercise(data)
   }
 
   getExerciseData(dataType: ExerciseDataType, id: string) {
@@ -1041,6 +1037,18 @@ export class UserDataServiceProvider {
     }
     return data;
   }
+
+  createCustomExercise(data: Exercise) {
+    console.log("Creating new exercise type");
+    console.log(JSON.stringify(data));
+
+    this.http_createCustomExercise(data)
+  }
+
+  createNewMeasurement(data: Measurement) {
+
+  }
+
 
   isTrainer(): Boolean {
     return (this.user_data.account_type == 1);

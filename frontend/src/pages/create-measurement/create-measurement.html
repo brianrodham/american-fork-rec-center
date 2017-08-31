@@ -7,12 +7,31 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>createMeasurement</ion-title>
+    <ion-title>Create Measurement</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div class="main-content">
+    <h2>Weight</h2>
+    <input type="number" [(ngModel)]="measurement.weight">
 
+    <h2>Thigh</h2>
+    <input type="number" [(ngModel)]="measurement.thigh">
+
+    <h2>Arm</h2>
+    <input type="number" [(ngModel)]="measurement.arm">
+
+    <h2>Chest</h2>
+    <input type="number" [(ngModel)]="measurement.chest">
+
+    <h2>Waist</h2>
+    <input type="number" [(ngModel)]="measurement.waist">
+  </div>
+
+  <a (click)="submit($event)">
+    <span class="span-button submit">Submit</span>
+  </a>
 </ion-content>

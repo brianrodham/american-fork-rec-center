@@ -41,7 +41,7 @@ export class MyApp {
       { title: 'Custom Exercise', component: CustomExercisePage },
       { title: 'Measurements', component: MeasurementsPage },
     /*  { title: 'Client List', component: ClientListPage }, // Only if they are a trainer*/
-      { title: 'Settings', component: SettingsPage},
+     /* { title: 'Settings', component: SettingsPage},*/
       { title: 'About', component: AboutPage },
       { title: 'Logout', component: LoginPage }
     ];

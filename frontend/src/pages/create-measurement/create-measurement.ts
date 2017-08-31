@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { UserDataServiceProvider, Measurement }  from '../../providers/user-data-service/user-data-service';
 
 /*
   Generated class for the CreateMeasurementPage page.
@@ -13,10 +14,18 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class CreateMeasurementPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  private measurement = new Measurement();
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userData: UserDataServiceProvider) {}
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateMeasurementPage');
+  }
+
+  submit(event){
+    console.log("Submitting new measurement");
+    this.userData.createNewMeasurement(this.measurement);
   }
 
 }

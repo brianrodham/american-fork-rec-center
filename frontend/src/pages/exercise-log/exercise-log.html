@@ -14,7 +14,7 @@
     <ion-icon class="ion-information-circled"></ion-icon>
   </h3>
         <!--[labels]="labels"-->
-    <canvas baseChart id="dataChart"
+   <!-- <canvas baseChart id="dataChart"
       class="chart"
       [datasets]="datasets"
       [labels]="labels"
@@ -22,7 +22,11 @@
       [colors]="chartColors"
       [legend]='false'
       [chartType]="'line'">
-    </canvas>
+    </canvas>-->
+
+    <p-chart #lineChart type="line" [data]="chartData"></p-chart>
+
+
     <div class="log">
         <span class="list-text" *ngIf="data.length == 0">
           No exercise data for this machine
