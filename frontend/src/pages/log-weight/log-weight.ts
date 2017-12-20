@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController  } from 'ionic-angular';
 //import {CalendarModule} from 'primeng/primeng';
 import { UserDataServiceProvider, ExerciseDataType, DataLog }  from '../../providers/user-data-service/user-data-service';
 
@@ -23,7 +23,8 @@ export class LogWeightPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,  
-    public userData:UserDataServiceProvider
+    public userData:UserDataServiceProvider,
+    private alertCtrl: AlertController
     ) {
     this.currentItem = navParams.get('item');
     this.parent = navParams.get('parent');
@@ -44,11 +45,42 @@ export class LogWeightPage {
       //console.log("Data:");
      // console.log(this.data);
 
-      this.userData.addExerciseLog(this.currentItem.id, this.data);
-      this.parent.lineChart.refresh();
-      this.parent.getMachineData(this.currentItem.id);
-      this.navCtrl.pop();
+     // Checks to see if there is already a log for the selected date/machine combo
 
+      if(this.isUniqueDate(this.data.date, parent)){
+        this.userData.addExerciseLog(this.currentItem.id, this.data);
+        this.parent.lineChart.refresh();
+        this.parent.getMachineData(this.currentItem.id);
+        this.navCtrl.pop();
+      }
+      else {
+        this.displayError();
+      }
+
+  }
+
+  private isUniqueDate(date, parent) {
+    var unique:Boolean = true;
+    /*console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log(this.parent.data);
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");*/
+
+    for(let log of this.parent.data){
+      console.log("Comparing " + date + " to " + log.date);
+      if(date == log.date){
+        unique = false;
+      }
+    }
+    return unique;
+  }
+
+  private displayError(){
+   let alert = this.alertCtrl.create({
+      title: 'LOG FAILED',
+      subTitle: "There is already a log for this machine for that date. Please delete the old entry and try again",
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 
 }

@@ -3,15 +3,21 @@
     <button menuToggle *ngIf="!selectedItem">
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Exercise Details</ion-title>
+
+    <ion-title>Exercise Records</ion-title>
+
+
+
   </ion-navbar>
 </ion-header>
 
 <ion-content scroll="false">
   <h3 text-center *ngIf="selectedItem">
     {{selectedItem.title}}
+    <button class="information" (click)="displayInfo()">
+      <ion-icon name="ios-information-circle-outline"></ion-icon>
+    </button>
     <!--<ion-icon [name]="selectedItem.icon"></ion-icon>-->
-    <ion-icon class="ion-information-circled"></ion-icon>
   </h3>
         <!--[labels]="labels"-->
    <!-- <canvas baseChart id="dataChart"

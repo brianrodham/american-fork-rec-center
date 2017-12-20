@@ -151,6 +151,22 @@ export class ExerciseLogPage {
     });
   }
 
+  private displayInfo(){
+    var info = this.machineData.description;
+    if(info == ""){
+      info = "No description avaliable for this exercise";
+    }
+    
+    console.log("Info: ");
+    console.log(info);
+      let alert = this.alertCtrl.create({
+      title: 'Information',
+      subTitle: info,
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
+
 
 
 }
